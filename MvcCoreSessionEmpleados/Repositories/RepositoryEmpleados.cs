@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MvcCoreSessionEmpleados.Data;
 using MvcCoreSessionEmpleados.Models;
-using System.Runtime.CompilerServices;
 
 namespace MvcCoreSessionEmpleados.Repositories
 {
@@ -29,21 +28,21 @@ namespace MvcCoreSessionEmpleados.Repositories
             return await consulta.FirstOrDefaultAsync();
         }
 
-        public async Task<List<Empleado>> GetEmpleadosSessionAsync(List<int> idsEmpleados)
+        public async Task<List<Empleado>> GetEmpleadosSessionAsync
+            (List<int> idsEmpleados)
         {
             var consulta = from datos in this.context.Empleados
                            where idsEmpleados.Contains(datos.IdEmpleado)
                            select datos;
-
             return await consulta.ToListAsync();
         }
 
-        public async Task<List<Empleado>> GetEmpleadosV4Async(List<int> idsEmpleados)
+        public async Task<List<Empleado>> GetEmpleadosNotSessionAsync
+            (List<int> idsEmpleados)
         {
             var consulta = from datos in this.context.Empleados
-                           where !idsEmpleados.Contains(datos.IdEmpleado)
+                           where idsEmpleados.Contains(datos.IdEmpleado) == false
                            select datos;
-
             return await consulta.ToListAsync();
         }
     }

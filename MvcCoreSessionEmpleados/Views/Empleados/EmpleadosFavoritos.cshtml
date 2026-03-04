@@ -1,23 +1,22 @@
-﻿@model List<Empleado>
+﻿@{
+    List<Empleado> favoritos = memoryCache.Get<List<Empleado>>("FAVORITOS");
+}
 
-<h1 style="color:red">
-    Empleados almacenados OK
-</h1>
+<h1>Empleados favoritos</h1>
+
 <p>
-    <a asp-controller="Empleados"
-    asp-action="SessionEmpleadosOk">
-        Volver a empleados
-    </a>
+    <a asp-controller="Empleados" asp-action="SessionEmpleadosV5">Volver a empleados V5</a>
 </p>
 
-<h2 style="color:red">@ViewData["MENSAJE"]</h2>
-
-@if (Model != null)
+@if (favoritos == null)
+{
+    <h3 style="color:red">No tenemos empleados favoritos</h3>
+}
+else
 {
     <table class="table table-warning">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Apellido</th>
                 <th>Oficio</th>
                 <th>Salario</th>
@@ -25,10 +24,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in favoritos)
             {
                 <tr>
-                    <td>@item.IdEmpleado</td>
                     <td>@item.Apellido</td>
                     <td>@item.Oficio</td>
                     <td>@item.Salario</td>

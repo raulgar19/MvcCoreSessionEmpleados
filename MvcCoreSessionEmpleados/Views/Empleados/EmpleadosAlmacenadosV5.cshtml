@@ -1,16 +1,19 @@
 ﻿@model List<Empleado>
 
-<h1 style="color:red">
-    Empleados almacenados OK
+<h1 style="color:darkred">
+    Empleados almacenados V5
 </h1>
 <p>
     <a asp-controller="Empleados"
-    asp-action="SessionEmpleadosOk">
+       asp-action="SessionEmpleadosV5">
         Volver a empleados
     </a>
 </p>
 
-<h2 style="color:red">@ViewData["MENSAJE"]</h2>
+@if(Context.Session.GetString("IDSEMPLEADOS") == null)
+{
+    <h1 style="color:red">No existen empleaos en Session</h1>
+}
 
 @if (Model != null)
 {
@@ -22,6 +25,7 @@
                 <th>Oficio</th>
                 <th>Salario</th>
                 <th>Departamento</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +37,13 @@
                     <td>@item.Oficio</td>
                     <td>@item.Salario</td>
                     <td>@item.IdDepartamento</td>
+                    <td>
+                        <a asp-controller="Empleados"
+                           asp-action="EmpleadosAlmacenadosV5" class="btn btn-outline-danger"
+                           asp-route-ideliminar="@item.IdEmpleado">
+                            Eliminar session
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>
