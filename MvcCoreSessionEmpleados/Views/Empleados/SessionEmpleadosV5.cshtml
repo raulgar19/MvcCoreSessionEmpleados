@@ -1,6 +1,4 @@
-﻿@inject IMemoryCache memoryCache;
-
-@model List<Empleado>
+﻿@model List<Empleado>
 
 @{
     List<int> ids = Context.Session.GetObject<List<int>>("IDSEMPLEADOS");
@@ -61,6 +59,18 @@ else
             else
             {
                 Empleado empFavorito = favoritos.Find(x => x.IdEmpleado == @empleado.IdEmpleado);
+
+                if (empFavorito == null)
+                {
+                    <a asp-controller="Empleados"
+                       asp-action="SessionEmpleadosV5" class="btn btn-info"
+                       asp-route-idfavorito="@empleado.IdEmpleado">
+                        Favorito</a>
+                }
+                else
+                {
+                    <img src="~/images/image1.jpg" style="width:auto; height:40px;" />
+                }
             }
 
             @if (ids == null)
